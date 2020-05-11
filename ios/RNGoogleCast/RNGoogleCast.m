@@ -107,6 +107,9 @@ RCT_REMAP_METHOD(getCastDevice,
 RCT_REMAP_METHOD(getCastState,
                  getCastStateWithResolver: (RCTPromiseResolveBlock) resolve
                  rejecter: (RCTPromiseRejectBlock) reject) {
+  if([GCKCastContext.sharedInstance castState] == GCKCastStateConnected) {
+    castSession = [[GCKCastContext.sharedInstance sessionManager] currentCastSession];
+  }
   dispatch_async(dispatch_get_main_queue(), ^{
     resolve(@([GCKCastContext.sharedInstance castState]));
   });
